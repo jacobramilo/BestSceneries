@@ -1,16 +1,17 @@
 package com.jacob.bestsceneries.di.component
 
 import android.app.Application
+import com.jacob.bestsceneries.MapsActivity
 import com.jacob.bestsceneries.MyApplication
 import com.jacob.bestsceneries.di.module.AppModule
 import com.jacob.bestsceneries.di.module.NetworkModule
-import com.jacob.bestsceneries.viewmodel.SceneryViewModel
+import com.jacob.bestsceneries.di.module.ViewModelModule
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [AppModule::class, NetworkModule::class, SceneryViewModel::class])
+@Component(modules = [AppModule::class, NetworkModule::class, ViewModelModule::class])
 interface AppComponent {
 
     @Component.Builder
@@ -22,4 +23,5 @@ interface AppComponent {
     }
 
     fun inject(application: MyApplication)
+    fun inject(mapsActivity: MapsActivity)
 }

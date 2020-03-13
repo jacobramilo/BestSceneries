@@ -22,12 +22,21 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
 }
 
 dependencies {
     def retrofit_version = "2.7.2"
     def dagger_version = "2.26"
     def room_version = "2.2.4"
+    def androidx_ver = "1.1.0"
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -52,6 +61,10 @@ dependencies {
     annotationProcessor "androidx.room:room-compiler:$room_version"
     annotationProcessor "android.arch.persistence.room:compiler:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
+
+    //AndroidX
+    implementation "androidx.core:core-ktx:$androidx_ver"
+    implementation "androidx.activity:activity-ktx:$androidx_ver"
 
 
 }

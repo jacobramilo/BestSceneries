@@ -2,6 +2,7 @@ package com.jacob.bestsceneries
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.lifecycle.Observer
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -9,14 +10,22 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.jacob.bestsceneries.database.entity.Scenery
+import com.jacob.bestsceneries.viewmodel.SceneryViewModel
+import javax.inject.Inject
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
 
+    @Inject lateinit var mViewModel: SceneryViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
+
+        (application as MyApplication).appComponent.inject(this)
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
@@ -35,9 +44,19 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
-        // Add a marker in Sydney and move the camera
-        val sydney = LatLng(-34.0, 151.0)
-        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        mViewModel.getSceneries().observe(this, Observer { sceneries ->
+            updateMapView(sceneries)
+        })
+    }
+
+    private fun updateMapView(sceneries: List<Scenery>) {
+        sceneries.forEach {
+            val scenery = LatLng(it.lat, it.lng)
+            mMap.addMarker(
+                MarkerOptions().position(scenery)
+                    .title(it.name)
+            )
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(scenery, 12.0f))
+        }
     }
 }
