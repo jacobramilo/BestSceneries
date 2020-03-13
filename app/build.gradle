@@ -27,6 +27,7 @@ android {
 dependencies {
     def retrofit_version = "2.7.2"
     def dagger_version = "2.26"
+    def room_version = "2.2.4"
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -44,4 +45,13 @@ dependencies {
     //Dagger
     implementation "com.google.dagger:dagger:$dagger_version"
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
+
+    //Room
+    implementation "androidx.room:room-runtime:$room_version"
+    implementation "androidx.room:room-rxjava2:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+    annotationProcessor "android.arch.persistence.room:compiler:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+
+
 }
