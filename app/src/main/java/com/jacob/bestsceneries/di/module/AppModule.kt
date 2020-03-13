@@ -1,8 +1,10 @@
 package com.jacob.bestsceneries.di.module
 
 import android.app.Application
+import com.jacob.bestsceneries.api.SceneriesWebservice
 import com.jacob.bestsceneries.database.SceneriesDb
 import com.jacob.bestsceneries.database.dao.SceneriesDao
+import com.jacob.bestsceneries.repository.SceneriesRepository
 import dagger.Module
 import dagger.Provides
 import java.util.concurrent.Executor
@@ -27,6 +29,12 @@ class AppModule {
     @Provides
     fun provideExecutor(): Executor {
         return Executors.newSingleThreadExecutor()
+    }
+
+    @Provides @Singleton fun provideSceneryRepository(sceneryApi: SceneriesWebservice,
+                                                      sceneryDao: SceneriesDao,
+                                                      executor: Executor): SceneriesRepository {
+        return SceneriesRepository(sceneryApi, sceneryDao, executor)
     }
 
 }
