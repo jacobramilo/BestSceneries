@@ -1,6 +1,7 @@
 package com.jacob.bestsceneries.di.component
 
 import android.app.Application
+import com.jacob.bestsceneries.MyApplication
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
@@ -17,4 +18,5 @@ interface AppComponent {
         fun build(): AppComponent
     }
 
+    fun inject(application: MyApplication)
 }
