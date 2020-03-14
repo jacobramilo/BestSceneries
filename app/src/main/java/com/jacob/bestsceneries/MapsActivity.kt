@@ -1,20 +1,25 @@
 package com.jacob.bestsceneries
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.Observer
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.input.input
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.jacob.bestsceneries.database.entity.Scenery
+import com.jacob.bestsceneries.util.Constant
 import com.jacob.bestsceneries.viewmodel.SceneryViewModel
 import javax.inject.Inject
 
-class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
+class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     private lateinit var mMap: GoogleMap
 
@@ -43,20 +48,45 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
      */
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
+        mMap.setOnMapLongClickListener { latLng ->
+            showAddLocation(latLng)
+        }
+        mMap.setOnMarkerClickListener(this)
 
         mViewModel.getSceneries().observe(this, Observer { sceneries ->
             updateMapView(sceneries)
         })
     }
 
-    private fun updateMapView(sceneries: List<Scenery>) {
-        sceneries.forEach {
-            val scenery = LatLng(it.lat, it.lng)
-            mMap.addMarker(
-                MarkerOptions().position(scenery)
-                    .title(it.name)
-            )
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(scenery, 12.0f))
+    private fun showAddLocation(latLng: LatLng) {
+        MaterialDialog(this).show {
+            title(R.string.enter_scenery_name)
+            input { dialog, text ->
+                val scenery = Scenery()
+                scenery.name = text.toString()
+                scenery.lng = latLng.longitude
+                scenery.lat = latLng.latitude
+                mViewModel.saveScenery(scenery)
+            }
+            positiveButton(R.string.submit)
         }
+    }
+
+    private fun updateMapView(sceneries: List<Scenery>) {
+        sceneries.forEachIndexed { index, scenery ->
+            val latLng = LatLng(scenery.lat, scenery.lng)
+            mMap.addMarker(
+                MarkerOptions().position(latLng)
+                    .title(scenery.name)
+            ).tag = scenery.id
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12.0f))
+        }
+    }
+
+    override fun onMarkerClick(marker: Marker): Boolean {
+        val intent = Intent(this, SceneryDetailsActivity::class.java)
+        intent.putExtra(Constant.PARAM_EXTRA_SCENERY_ID, marker.tag as Int)
+        startActivity(intent)
+        return true
     }
 }

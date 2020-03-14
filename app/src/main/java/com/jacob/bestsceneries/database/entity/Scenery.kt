@@ -3,9 +3,10 @@ package com.jacob.bestsceneries.database.entity
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.android.gms.maps.model.LatLng
+import java.io.Serializable
 
 @Entity
-class Scenery {
+class Scenery: Serializable {
 
     @PrimaryKey
     var id = this.hashCode()
@@ -16,10 +17,7 @@ class Scenery {
 
     var lng: Double = 0.0
 
-    override fun hashCode(): Int {
-        val latLng = LatLng(lat, lng)
-        return latLng.hashCode()
-    }
+    var notes: String? = null
 
     override fun toString(): String {
         return name ?: ""

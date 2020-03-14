@@ -15,4 +15,10 @@ interface SceneriesDao {
 
     @Query(value = "SELECT * FROM Scenery")
     fun getSceneries(): LiveData<List<Scenery>>
+
+    @Query(value = "SELECT * FROM Scenery WHERE lat = :lat and lng = :lng")
+    fun getScenery(lat: Double, lng: Double): LiveData<Scenery>
+
+    @Query(value = "SELECT * FROM Scenery WHERE id = :id")
+    fun getScenery(id: Int): LiveData<Scenery>
 }

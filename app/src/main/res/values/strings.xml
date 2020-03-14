@@ -1,4 +1,13 @@
 <resources>
     <string name="app_name">BestSceneries</string>
     <string name="title_activity_maps">Map</string>
+    <string name="submit">Submit</string>
+    <string name="enter_scenery_name">Please enter the Scenery name</string>
+    <string name="enter_scenery_note">Please enter the Scenery note</string>
+    <string name="name_label">Name:</string>
+    <string name="latitude_labe">Latitude</string>
+    <string name="longitude_label">Longitude</string>
+    <string name="notes">Notes:</string>
+    <string name="add_note">Add Note</string>
+    <string name="edit_note">Edit Note</string>
 </resources>

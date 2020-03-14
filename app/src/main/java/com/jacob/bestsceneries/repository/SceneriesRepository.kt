@@ -1,6 +1,7 @@
 package com.jacob.bestsceneries.repository
 
 import androidx.lifecycle.LiveData
+import com.google.android.gms.maps.model.LatLng
 import com.jacob.bestsceneries.api.SceneriesWebservice
 import com.jacob.bestsceneries.database.dao.SceneriesDao
 import com.jacob.bestsceneries.database.entity.Scenery
@@ -26,6 +27,14 @@ class SceneriesRepository @Inject constructor(
         executor.execute {
             sceneryDao.save(scenery)
         }
+    }
+
+    fun getScenery(latLng: LatLng): LiveData<Scenery> {
+        return sceneryDao.getScenery(latLng.latitude, latLng.longitude)
+    }
+
+    fun getScenery(id: Int): LiveData<Scenery> {
+        return sceneryDao.getScenery(id)
     }
 
     private fun refreshScenery() {
