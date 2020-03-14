@@ -53,8 +53,11 @@ class SceneryDetailsActivity: AppCompatActivity() {
         tv_longitude.text = scenery.lng.toString()
 
         viewModel.getNote(scenery.noteId).observe(this, Observer {
-            sceneryNote
-            tv_notes.text = it.note
+            sceneryNote = it
+            sceneryNote?.let { note ->
+                tv_notes.text = note.note
+            }
+
         })
 
         invalidateOptionsMenu()
