@@ -13,5 +13,5 @@ To launch the Scenery Details screen, the user must either:
 </li>
 <li>The user can add a scenery by a long click in the map view mode. A pop up will appear to name it.</li>
 <li>Adding a scenery can only be done in map view mode</li>
-<li>A scenery note can be added from the Scenery Details screen</li>
+<li>A scenery note can be added from the Scenery Details screen's options menu</li>
 </ol>
