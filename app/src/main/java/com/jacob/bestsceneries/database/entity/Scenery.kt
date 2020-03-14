@@ -4,12 +4,12 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.android.gms.maps.model.LatLng
 import java.io.Serializable
+import java.util.*
 
-@Entity
-class Scenery: Serializable {
+@Entity(primaryKeys = ["lat", "lng"])
+class Scenery {
 
-    @PrimaryKey
-    var id = this.hashCode()
+    var id = UUID.randomUUID().toString()
 
     var name: String? = null
 

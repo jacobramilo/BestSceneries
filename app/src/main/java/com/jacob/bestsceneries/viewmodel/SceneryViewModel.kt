@@ -18,11 +18,11 @@ class SceneryViewModel constructor(
         sceneryRepository.saveScenery(scenery)
     }
 
-    fun getScenery(latLng: LatLng): LiveData<Scenery> {
-        return sceneryRepository.getScenery(latLng)
+    fun getScenery(lat: Double, lng: Double): LiveData<Scenery> {
+        return sceneryRepository.getScenery(lat, lng)
     }
 
-    fun getScener(id: Int): LiveData<Scenery> {
-        return sceneryRepository.getScenery(id)
+    fun getSydneyLatLong(): LatLng {
+        return LatLng(-33.86785, 151.20732)
     }
 }

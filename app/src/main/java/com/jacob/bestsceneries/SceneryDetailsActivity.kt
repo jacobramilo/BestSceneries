@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.input.input
+import com.google.android.gms.maps.model.LatLng
 import com.jacob.bestsceneries.database.entity.Scenery
 import com.jacob.bestsceneries.util.Constant
 import com.jacob.bestsceneries.viewmodel.SceneryViewModel
@@ -31,9 +32,8 @@ class SceneryDetailsActivity: AppCompatActivity() {
     }
 
     private fun initUi() {
-        val sceneryId = intent?.extras?.getInt(Constant.PARAM_EXTRA_SCENERY_ID)
-
-        viewModel.getScener(sceneryId!!).observe(this, Observer {
+        val latLng = intent?.extras?.getSerializable(Constant.PARAM_EXTRA_SCENERY_ID) as LatLng
+        viewModel.getScenery(latLng.latitude, latLng.longitude).observe(this, Observer {
             scenery = it
             updateUI(it)
         })

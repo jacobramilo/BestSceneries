@@ -29,12 +29,8 @@ class SceneriesRepository @Inject constructor(
         }
     }
 
-    fun getScenery(latLng: LatLng): LiveData<Scenery> {
-        return sceneryDao.getScenery(latLng.latitude, latLng.longitude)
-    }
-
-    fun getScenery(id: Int): LiveData<Scenery> {
-        return sceneryDao.getScenery(id)
+    fun getScenery(lat: Double, lng: Double): LiveData<Scenery> {
+        return sceneryDao.getScenery(lat, lng)
     }
 
     private fun refreshScenery() {

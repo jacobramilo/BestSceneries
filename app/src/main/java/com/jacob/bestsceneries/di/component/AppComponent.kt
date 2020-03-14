@@ -7,6 +7,8 @@ import com.jacob.bestsceneries.SceneryDetailsActivity
 import com.jacob.bestsceneries.di.module.AppModule
 import com.jacob.bestsceneries.di.module.NetworkModule
 import com.jacob.bestsceneries.di.module.ViewModelModule
+import com.jacob.bestsceneries.fragment.SceneryListFragment
+import com.jacob.bestsceneries.fragment.SceneryMapFragment
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
@@ -26,4 +28,7 @@ interface AppComponent {
     fun inject(application: MyApplication)
     fun inject(mapsActivity: MapsActivity)
     fun inject(sceneryDetailsActivity: SceneryDetailsActivity)
+
+    fun inject(sceneryListFragment: SceneryListFragment)
+    fun inject(sceneryMapFragment: SceneryMapFragment)
 }

@@ -10,4 +10,7 @@
     <string name="notes">Notes:</string>
     <string name="add_note">Add Note</string>
     <string name="edit_note">Edit Note</string>
+
+    <string name="map_view">Map</string>
+    <string name="list_view">List</string>
 </resources>
