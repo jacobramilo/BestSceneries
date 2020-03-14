@@ -6,7 +6,7 @@ import java.util.*
 @Entity(primaryKeys = ["lat", "lng"])
 class Scenery {
 
-    var noteId: String = UUID.randomUUID().toString()
+    var noteId: Int = 0
 
     var name: String? = null
 

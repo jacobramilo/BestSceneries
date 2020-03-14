@@ -23,7 +23,7 @@ class SceneryViewModel constructor(
         sceneryRepository.saveNote(sceneryNote)
     }
 
-    fun getNote(noteId: String): LiveData<SceneryNote> {
+    fun getNote(noteId: Int): LiveData<SceneryNote> {
         return sceneryRepository.getNote(noteId)
     }
 

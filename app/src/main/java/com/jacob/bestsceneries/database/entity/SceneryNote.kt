@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 class SceneryNote {
 
     @PrimaryKey
-    var noteId: Long = 0L
+    var noteId: Int? = null
 
     var note: String? = null
 

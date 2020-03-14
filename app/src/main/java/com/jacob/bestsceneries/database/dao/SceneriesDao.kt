@@ -25,5 +25,5 @@ interface SceneriesDao {
     fun saveNote(sceneryNote: SceneryNote)
 
     @Query(value = "SELECT * FROM SceneryNote WHERE noteId = :noteId")
-    fun getNote(noteId: String): LiveData<SceneryNote>
+    fun getNote(noteId: Int): LiveData<SceneryNote>
 }

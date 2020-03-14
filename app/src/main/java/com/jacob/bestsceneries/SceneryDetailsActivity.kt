@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.input.input
-import com.google.android.gms.maps.model.LatLng
 import com.jacob.bestsceneries.database.entity.Scenery
 import com.jacob.bestsceneries.database.entity.SceneryNote
 import com.jacob.bestsceneries.util.Constant
@@ -42,25 +41,26 @@ class SceneryDetailsActivity: AppCompatActivity() {
 
         viewModel.getScenery(lat, lng)?.observe(this, Observer {
             scenery = it
-            updateUI(it)
+            updateSceneryUI(it)
         })
 
     }
 
-    private fun updateUI(scenery: Scenery) {
+    private fun updateSceneryUI(scenery: Scenery) {
         tv_scenery_name.text = scenery.name
         tv_scenery_lat.text = scenery.lat.toString()
         tv_longitude.text = scenery.lng.toString()
 
         viewModel.getNote(scenery.noteId).observe(this, Observer {
             sceneryNote = it
-            sceneryNote?.let { note ->
-                tv_notes.text = note.note
+            if(sceneryNote == null) {
+                tv_notes.text = ""
+            } else {
+                tv_notes.text = sceneryNote?.note
             }
 
+            invalidateOptionsMenu()
         })
-
-        invalidateOptionsMenu()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -93,9 +93,11 @@ class SceneryDetailsActivity: AppCompatActivity() {
         MaterialDialog(this).show {
             title(R.string.enter_scenery_note)
             input(prefill = sceneryNote?.note) { dialog, text ->
-                sceneryNote?.let {
-                    it.note = text.toString()
-                    viewModel.saveNote(it)
+                scenery?.let {
+                    val sceneryNote = SceneryNote()
+                    sceneryNote.noteId = it.noteId
+                    sceneryNote.note = text.toString()
+                    viewModel.saveNote(sceneryNote)
                 }
             }
             positiveButton(R.string.submit)

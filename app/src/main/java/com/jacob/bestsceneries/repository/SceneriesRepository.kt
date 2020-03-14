@@ -35,10 +35,12 @@ class SceneriesRepository @Inject constructor(
     }
 
     fun saveNote(sceneryNote: SceneryNote) {
-        return sceneryDao.saveNote(sceneryNote)
+        executor.execute{
+            sceneryDao.saveNote(sceneryNote)
+        }
     }
 
-    fun getNote(noteId: String): LiveData<SceneryNote> {
+    fun getNote(noteId: Int): LiveData<SceneryNote> {
         return sceneryDao.getNote(noteId)
     }
 
@@ -53,6 +55,8 @@ class SceneriesRepository @Inject constructor(
                     executor.execute {
                         val sceneries = response.body()
                         sceneries?.locations?.forEach {
+                            val id = LatLng(it.lat, it.lng).hashCode()
+                            it.noteId = id
                             sceneryDao.save(it)
                         }
                     }
