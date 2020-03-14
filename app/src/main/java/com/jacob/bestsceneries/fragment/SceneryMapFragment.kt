@@ -21,6 +21,7 @@ import com.jacob.bestsceneries.util.Constant
 import com.jacob.bestsceneries.viewmodel.SceneryViewModel
 import javax.inject.Inject
 import androidx.lifecycle.Observer
+import com.jacob.bestsceneries.util.Navigator
 
 class SceneryMapFragment: SupportMapFragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
     private lateinit var mMap: GoogleMap
@@ -62,16 +63,16 @@ class SceneryMapFragment: SupportMapFragment(), OnMapReadyCallback, GoogleMap.On
             mMap.addMarker(
                 MarkerOptions().position(lastlatLng)
                     .title(scenery.name)
-            ).tag = lastlatLng
+            ).tag = scenery
         }
 
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mViewModel.getSydneyLatLong(), 12.0f))
     }
 
     override fun onMarkerClick(marker: Marker): Boolean {
-        val intent = Intent(activity, SceneryDetailsActivity::class.java)
-        intent.putExtra(Constant.PARAM_EXTRA_SCENERY_ID, marker.tag as LatLng)
-        startActivity(intent)
+        val scenery = marker.tag as Scenery
+        Navigator.navigateToDetails(context!!, scenery.name, scenery.lat, scenery.lng)
+
         return true
     }
 

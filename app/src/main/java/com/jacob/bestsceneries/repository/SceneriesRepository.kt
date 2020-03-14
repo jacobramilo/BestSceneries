@@ -5,6 +5,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.jacob.bestsceneries.api.SceneriesWebservice
 import com.jacob.bestsceneries.database.dao.SceneriesDao
 import com.jacob.bestsceneries.database.entity.Scenery
+import com.jacob.bestsceneries.database.entity.SceneryNote
 import com.jacob.bestsceneries.model.Sceneries
 import retrofit2.Call
 import retrofit2.Callback
@@ -31,6 +32,14 @@ class SceneriesRepository @Inject constructor(
 
     fun getScenery(lat: Double, lng: Double): LiveData<Scenery> {
         return sceneryDao.getScenery(lat, lng)
+    }
+
+    fun saveNote(sceneryNote: SceneryNote) {
+        return sceneryDao.saveNote(sceneryNote)
+    }
+
+    fun getNote(noteId: String): LiveData<SceneryNote> {
+        return sceneryDao.getNote(noteId)
     }
 
     private fun refreshScenery() {

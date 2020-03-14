@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.google.android.gms.maps.model.LatLng
 import com.jacob.bestsceneries.database.entity.Scenery
+import com.jacob.bestsceneries.database.entity.SceneryNote
 import com.jacob.bestsceneries.repository.SceneriesRepository
 
 class SceneryViewModel constructor(
@@ -18,7 +19,18 @@ class SceneryViewModel constructor(
         sceneryRepository.saveScenery(scenery)
     }
 
-    fun getScenery(lat: Double, lng: Double): LiveData<Scenery> {
+    fun saveNote(sceneryNote: SceneryNote) {
+        sceneryRepository.saveNote(sceneryNote)
+    }
+
+    fun getNote(noteId: String): LiveData<SceneryNote> {
+        return sceneryRepository.getNote(noteId)
+    }
+
+    fun getScenery(lat: Double?, lng: Double?): LiveData<Scenery>? {
+        if(lat == null || lng == null) {
+            return null
+        }
         return sceneryRepository.getScenery(lat, lng)
     }
 

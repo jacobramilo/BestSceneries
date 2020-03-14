@@ -6,8 +6,9 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.jacob.bestsceneries.database.dao.SceneriesDao
 import com.jacob.bestsceneries.database.entity.Scenery
+import com.jacob.bestsceneries.database.entity.SceneryNote
 
-@Database(entities = [Scenery::class], version = 1)
+@Database(entities = [Scenery::class, SceneryNote::class], version = 1)
 abstract class SceneriesDb: RoomDatabase() {
 
     abstract fun sceneriesDao(): SceneriesDao
